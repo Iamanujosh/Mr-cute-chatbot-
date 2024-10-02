@@ -4,15 +4,169 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Registration</title>
+    {% load static %}
+    <style>
+        body {
+            background-image: url('https://wallpapercave.com/wp/wp7315420.jpg'); /* Add your background image path here */
+            background-size: cover; /* Cover the entire screen */
+            background-position: center; /* Center the background image */
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;  /* Align items to the top */
+            padding: 20px;
+            margin: 0;
+            height: 100vh;
+        }
+
+        .container {
+            background: white;
+            padding: 40px;  /* Increased padding for a more spacious feel */
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 100%;  /* Full width of the page */
+            max-width: 600px;  /* Max width for larger screens */
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;  /* Space below the heading */
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="email"],
+        input[type="number"],
+        select {
+            width: calc(100% - 20px);  /* Full width minus padding */
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .checkbox-group {
+            margin-bottom: 15px;
+        }
+
+        .checkbox-group label {
+            display: inline-block;
+            margin-right: 10px;  /* Space between checkboxes */
+        }
+
+        button {
+            background-color: #5cb85c;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #4cae4c;
+        }
+
+        .illustraion {
+            height: 200px;  /* Placeholder height for image space */
+            background-color: #eaeaea;
+            border: 2px dashed #ccc;
+            margin-bottom: 20px;  /* Space below the image placeholder */
+        }
+    </style>
 </head>
 <body>
-    <h1>User Registration</h1>
-    
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}  <!-- Renders the form fields automatically -->
-        <button type="submit">Register</button>
-    </form>
+    <div class="container">
+        <h1>User Registration</h1>
+        
+        <img src="https://media.istockphoto.com/id/1409839764/vector/cute-little-robot-smiling-robotics-and-technology-kawaii-robot.jpg?s=612x612&w=0&k=20&c=qV3NO5VjN6UWdqWXDaKoFEAxt2o0ak0_jQRmM_JVGV4=" alt="Cute Illustration" class="illustration">
+       
+        <form method="POST">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password1">Password:</label>
+                <input type="password" id="password1" name="password1" required>
+            </div>
+            <div class="form-group">
+                <label for="password2">Confirm Password:</label>
+                <input type="password" id="password2" name="password2" required>
+            </div>
+            <div class="form-group">
+                <label for="age">Age:</label>
+                <input type="number" id="age" name="age" required>
+            </div>
+            <div class="form-group">
+                <label for="institution">Institution:</label>
+                <input type="text" id="institution" name="institution" required>
+            </div>
+            <div class="form-group">
+                <label for="year_of_study">Year of Study:</label>
+                <input type="text" id="year_of_study" name="year_of_study" required>
+            </div>
+            <div class="form-group">
+                <label for="mental_health_goal">Mental Health Goal:</label>
+                <input type="text" id="mental_health_goal" name="mental_health_goal" required>
+            </div>
+            <div class="form-group">
+                <label for="preferred_support">Preferred Support:</label>
+                <input type="text" id="preferred_support" name="preferred_support" required>
+            </div>
+            <div class="form-group">
+                <label for="favorite_movie_genre">Favorite Movie Genre:</label>
+                <input type="text" id="favorite_movie_genre" name="favorite_movie_genre" required>
+            </div>
+            <div class="form-group">
+                <label for="favorite_song_genre">Favorite Song Genre:</label>
+                <input type="text" id="favorite_song_genre" name="favorite_song_genre" required>
+            </div>
+            <div class="form-group">
+                <label for="favorite_book_genre">Favorite Book Genre:</label>
+                <input type="text" id="favorite_book_genre" name="favorite_book_genre" required>
+            </div>
+            <div class="form-group">
+                <label for="emergency_contact">Emergency Contact Name:</label>
+                <input type="text" id="emergency_contact" name="emergency_contact" required>
+            </div>
+            <div class="form-group">
+                <label for="emergency_contact_phone">Emergency Contact Phone:</label>
+                <input type="text" id="emergency_contact_phone" name="emergency_contact_phone" required>
+            </div>
+            <div class="form-group">
+                <label for="current_emotional_state">Current Emotional State:</label>
+                <input type="text" id="current_emotional_state" name="current_emotional_state" required>
+            </div>
+
+            <div class="checkbox-group">
+                <label>
+                    <input type="checkbox" name="terms" required>
+                    I agree to the terms and conditions
+                </label>
+            </div>
+
+            <button type="submit">Register</button>
+        </form>
+    </div>
 </body>
 </html>
-    
