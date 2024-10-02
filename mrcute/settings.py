@@ -100,6 +100,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL = 'chatbot.CustomUser'  # Replace 'your_app_name' with your actual app name
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
