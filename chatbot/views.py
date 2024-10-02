@@ -5,8 +5,9 @@ import re
 from django.core.files.storage import default_storage
 import base64
 from django.utils.safestring import mark_safe
+from django.contrib.auth import authenticate, login
 import os
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm,LoginForm
 
 
 # Create your views here.
@@ -135,8 +136,6 @@ def chat(request):
 
      return render(request, 'chatbot/chat.html', context)
 
-   
-
 def bold_asterisk_text(sentence):
     # Replace *word* with <strong>word</strong>
    
@@ -152,6 +151,7 @@ def bold_asterisk_text(sentence):
             break
             
     return sentence
+
 def signup(request):
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
@@ -164,7 +164,22 @@ def signup(request):
     return render(request, 'chatbot/signup.html', {'form': form})
 
 def login(request):
-    return render(request,'chatbot/login.html')
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('signup')  # Redirect to a home page or dashboard after successful login
+            else:
+                # Invalid login
+                form.add_error(None, "Invalid username or password")
+    else:
+        form = LoginForm()
+
+    return render(request, 'chatbot/login.html', {'form': form})
 
 def moodTracker(request):
     return render(request,'chatbot/moodTracker.html')
