@@ -8,8 +8,12 @@ from django.utils.safestring import mark_safe
 from django.contrib.auth import authenticate, login
 import os
 from .forms import CustomUserCreationForm,LoginForm
-
-
+from textblob import TextBlob
+from .models import MoodTracker
+from django.utils.timezone import now
+import json
+from django.utils.safestring import mark_safe
+from collections import Counter
 # Create your views here.
 
 history = []
@@ -66,7 +70,8 @@ model = genai.GenerativeModel(
 )
 
 #chat with bot
-
+def home(request):
+    return render (request,'chatbot/home.html')
 def chat(request):
      
      context = {}
@@ -110,7 +115,9 @@ def chat(request):
             response = chat_session.send_message(user_input)
             model_response = bold_asterisk_text(response.text)
             example_message = "<b>Hello!</b> This message is <i>italicized</i>."
-           
+            mood,vlue= detect_mood(user_input)
+            if request.user.is_authenticated:
+                MoodTracker.objects.create(user=request.user, mood=mood, timestamp=now(),vlue=vlue)
 
             # Append user and bot messages to the history
             history.append({"role": "user", "parts": [user_input]})
@@ -153,33 +160,52 @@ def bold_asterisk_text(sentence):
     return sentence
 
 def signup(request):
+    if request.user.is_authenticated:
+        return redirect('chat')  # Redirect to chat if user is already authenticated
+    
     if request.method == 'POST':
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('login')  # Redirect after successful registration
+            return redirect('chat')  # Redirect after successful registration
     else:
         form = CustomUserCreationForm()
     
     return render(request, 'chatbot/signup.html', {'form': form})
 
-def login(request):
+
+def login_view(request):
+    if request.user.is_authenticated:
+        return redirect('chat')  # Redirect to chat if user is already authenticated
+    
     if request.method == 'POST':
-        form = LoginForm(request.POST)
+        form = LoginForm(data=request.POST)
         if form.is_valid():
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            user = authenticate(request, username=username, password=password)
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('signup')  # Redirect to a home page or dashboard after successful login
-            else:
-                # Invalid login
-                form.add_error(None, "Invalid username or password")
+                return redirect('chat')  # Redirect to chat after successful login
     else:
         form = LoginForm()
-
+    
     return render(request, 'chatbot/login.html', {'form': form})
 
-def moodTracker(request):
-    return render(request,'chatbot/moodTracker.html')
+    
+def detect_mood(user_input):
+    # Perform sentiment analysis on user input
+    analysis = TextBlob(user_input)
+    
+    # Get the sentiment polarity
+    polarity = analysis.sentiment.polarity  # Polarity ranges from -1 (negative) to 1 (positive)
+    
+    # Determine mood based on polarity score
+    if polarity > 0.5:
+        return "happy",polarity
+    elif 0 < polarity <= 0.5:
+        return "neutral",polarity
+    elif -0.5 < polarity <= 0:
+        return "sad",polarity
+    else:
+        return "angry",polarity

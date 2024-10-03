@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healthcare Homepage</title>
+    <style>
+        body {
+            background-color: #f4f4f4;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .navbar {
+            background-color: #007BFF;
+            padding: 10px;
+            text-align: center;
+        }
+        .navbar a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+        }
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+        .login-register {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .login-register a {
+            display: inline-block;
+            margin: 10px 20px;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .login-register a:hover {
+            background-color: #0056b3;
+        }
+        .features {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+        .feature {
+            background-color: #ffffff;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 10px;
+            width: calc(33% - 40px); /* Adjust width and margin for responsiveness */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+            position: relative; /* For positioning the image */
+        }
+        .feature:hover {
+            transform: translateY(-5px);
+        }
+        .feature img {
+            width: 100%; /* Full width for responsive images */
+            border-radius: 8px 8px 0 0; /* Round top corners */
+        }
+        .feature h2 {
+            color: #007BFF;
+        }
+        .feature p {
+            color: #555;
+        }
+        .feature a {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 10px 15px;
+            background-color: #28a745;
+            color: white;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        .feature a:hover {
+            background-color: #218838;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .feature {
+                width: calc(50% - 40px); /* Two features per row on medium screens */
+            }
+        }
+        @media (max-width: 480px) {
+            .feature {
+                width: 100%; /* Full width on small screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="container">
+        <h1>Welcome to Our Healthcare Application</h1>
+
+        <div class="login-register">
+            <a href="{% url 'login' %}">Login</a>
+            <a href="{% url 'signup' %}">Register</a>
+        </div>
+
+        <div class="features">
+            <div class="feature">
+                <img src="https://imgs.search.brave.com/N7XSpinNhDsfXacc4o0jmacKAaYeaj00T7_TKcniN3g/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvMTQw/MTgxMTc2Ni92ZWN0/b3IvYS1jdXRlLXJv/dW5kLXJvYm90LXdl/YXJpbmctYS1zdGV0/aG9zY29wZS1uZXct/dGVjaG5vbG9naWVz/LWFuZC1saWZlc3R5/bGUuanBnP3M9NjEy/eDYxMiZ3PTAmaz0y/MCZjPUtjbm9KSGV6/RG9MU3JVTVhIcEFQ/NEtCanhNZDJYRUNV/SEcwaXJkTHlobUU9" alt="Personalized Healthcare">
+                <h2>Chat with Bot</h2>
+                <a href="{% url 'chat' %}">Learn More</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
